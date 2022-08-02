@@ -1,8 +1,5 @@
-/**
- * khai báo lớp đối tượng Nhanvien
- * + khai báo cac thuộc tính, phương pháp chung của các đối tượng sinh viên
- */
-function NhanVien(maNV, tenNV, emailNV, passwordNV, ngaylamNV, LuongNV, chucvuNV, gioNV) {
+
+ function NhanVien(maNV, tenNV, emailNV, passwordNV, ngaylamNV, LuongNV, chucvuNV, gioNV) {
    this.maNV = maNV;
    this.tenNV = tenNV;
    this.emailNV = emailNV;
@@ -16,15 +13,13 @@ function NhanVien(maNV, tenNV, emailNV, passwordNV, ngaylamNV, LuongNV, chucvuNV
    this.xeploai = "";
    // phương thức
    this.tongluong = function () {
-      if (this.chucvuNV = "giám đốc") {
+      if(this.chucvuNV == "Sếp"){
          this.tongluong = this.LuongNV * 3;
-      } else if (this.chucvuNV = "Trưởng Phòng") {
+     }else if(this.chucvuNV == "Trưởng phòng"){
          this.tongluong = this.LuongNV * 2;
-      } else if (this.chucvuNV = "Nhân Viên") {
+     }else if(this.chucvuNV == "Nhân viên"){
          this.tongluong = this.LuongNV;
-      } else{
-         this.tongluong = "";
-      }     
+     }
    }
    this.xeploai = function () {
       var loai = Number(this.gioNV);
@@ -36,7 +31,7 @@ function NhanVien(maNV, tenNV, emailNV, passwordNV, ngaylamNV, LuongNV, chucvuNV
          this.xeploai = "Khá";
       } else if (loai < 160) {
          this.xeploai = "Trung Bình";
-      } else{
+      } else {
          this.xeploai = "";
       }
    }

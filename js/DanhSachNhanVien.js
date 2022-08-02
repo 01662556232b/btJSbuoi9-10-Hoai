@@ -1,15 +1,8 @@
-/**+ lưu trữ nhiều đối tượng nv (mảng nhan viên)
- * + thêm NV( thêm phần tử mới cho mảng)
- * + xoa, sủa ( xõa, cập nhật phần tử mới cho mảng)
- * + tìm kiems nv theo điểu kiện
- */
 
-function DanhSachNhanVien() {
-    //thuộc tính
-    // mảng các đốitượng sinh viên
+ function DanhSachNhanVien() {
+
     this.mangNV = [];
-    //phương thức
-    //truyền tham số là đối tưởng sv
+
     this.themNV = function (nv) {
         this.mangNV.push(nv);
         
@@ -32,8 +25,21 @@ function DanhSachNhanVien() {
     this.capnhatNV = function (nv) {
         var ViTri = this.timViTri(nv.maNV);
         if(ViTri > -1){
-            dsnv.mangNV[ViTri] = nv
+            dsnv.mangNV[ViTri] = nv;
         }
     }
     
+}
+DanhSachNhanVien.prototype.timkiem = function (tukhoa) {
+    var mangTK = [];
+    var tukhoathuong = tukhoa.toLowerCase();
+    this.mangNV.map(function (nv) {
+        var tenNVxeploai = nv.xeploai.toLowerCase();
+        var vitriTk = tenNVxeploai.indexOf(tukhoathuong);
+        if (vitriTk >-1){
+           
+            mangTK.push(nv);
+        }
+    })
+    return mangTK;
 }

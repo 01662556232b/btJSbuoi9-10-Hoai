@@ -1,6 +1,6 @@
 function Validation() {
     this.checkEmpty = function (inputVal, spanID, message) {
-      
+
         if (inputVal.trim() != "") {
             // hợp lệ
             document.getElementById(spanID).innerHTML = "";
@@ -63,7 +63,7 @@ function Validation() {
     }
     this.checkscore = function (inputVal, spanID, message) {
         var pattern = /^[0-9]+$/;
-        if (inputVal.match(pattern) &&  inputVal <= 2e7) {
+        if (inputVal.match(pattern) && inputVal <= 2e7) {
             document.getElementById(spanID).innerHTML = "";
             document.getElementById(spanID).style.display = "none";
             return true;
@@ -79,6 +79,34 @@ function Validation() {
             document.getElementById(spanID).style.display = "none";
             return true;
         }
+        document.getElementById(spanID).innerHTML = message;
+        document.getElementById(spanID).style.display = "block";
+        return false;
+    }
+    this.checkngay= function(inputVal, spanID, message){
+        var pattern = /^(0?[1-9]|1[012])[\/\-](0?[1-9]|[12][0-9]|3[01])[\/\-]\d{4}$/
+
+        if(inputVal.match(pattern) ){
+            
+            document.getElementById(spanID).innerHTML = "";
+            document.getElementById(spanID).style.display = "none";
+            return true;
+        }
+
+        document.getElementById(spanID).innerHTML = message;
+        document.getElementById(spanID).style.display = "block";
+        return false;
+    }
+    this.checkgio= function(inputVal, spanID, message){
+        var pattern = /^[0-9]+$/
+
+        if(inputVal.match(pattern) &&  inputVal <= 200 && inputVal >= 80){
+            //hợp lệ
+            document.getElementById(spanID).innerHTML = "";
+            document.getElementById(spanID).style.display = "none";
+            return true;
+        }
+
         document.getElementById(spanID).innerHTML = message;
         document.getElementById(spanID).style.display = "block";
         return false;
