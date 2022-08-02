@@ -1,5 +1,4 @@
-
- function NhanVien(maNV, tenNV, emailNV, passwordNV, ngaylamNV, LuongNV, chucvuNV, gioNV) {
+function NhanVien(maNV, tenNV, emailNV, passwordNV, ngaylamNV, LuongNV, chucvuNV, gioNV) {
    this.maNV = maNV;
    this.tenNV = tenNV;
    this.emailNV = emailNV;
@@ -9,17 +8,17 @@
    this.chucvuNV = chucvuNV;
    this.gioNV = gioNV;
 
-   this.tongluong = 0;
+   this.luong = 0;
    this.xeploai = "";
-   // phương thức
-   this.tongluong = function () {
-      if(this.chucvuNV == "Sếp"){
+
+   this.luong = function () {
+      if (this.chucvuNV == "Sếp") {
          this.tongluong = this.LuongNV * 3;
-     }else if(this.chucvuNV == "Trưởng phòng"){
+      } else if (this.chucvuNV == "Trưởng phòng") {
          this.tongluong = this.LuongNV * 2;
-     }else if(this.chucvuNV == "Nhân viên"){
+      } else if (this.chucvuNV == "Nhân viên") {
          this.tongluong = this.LuongNV;
-     }
+      }
    }
    this.xeploai = function () {
       var loai = Number(this.gioNV);

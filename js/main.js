@@ -1,8 +1,4 @@
-/**+ lưu trữ nhiều đối tượng sv (mảng sinh viên)
- * + thêm SV( thêm phần tử mới cho mảng)
- * + xoa, sủa ( xóa, cập nhật phần tử mới cho mảng)
- * + tìm kiems sv theo điểu kiện
- */
+
 var dsnv = new DanhSachNhanVien();
 var validation = new Validation();
 
@@ -32,7 +28,6 @@ function themNhanVien() {
     var LuongNV = getELE("luongCB").value;
     var chucvuNV = getELE("chucvu").value;
     var gioNV = getELE("gioLam").value;
-
 
     console.log(maNV, tenNV, emailNV, passwordNV, ngaylamNV, LuongNV, chucvuNV, gioNV);
 
@@ -65,13 +60,10 @@ function themNhanVien() {
 
 
     if (isValid) {
-        var nv = new NhanVien(maNV, tenNV, emailNV, passwordNV, ngaylamNV, Number(LuongNV), chucvuNV, Number(gioNV));
-        nv.tongluong();
+        var nv = new NhanVien(maNV, tenNV, emailNV, passwordNV, ngaylamNV, LuongNV, chucvuNV, gioNV);
+        nv.luong();
         nv.xeploai();
-        console.log(nv);
-
         dsnv.themNV(nv);
-        console.log(dsnv.mangNV);
         hienthiDS(dsnv.mangNV);
         setlocalstorage();
         resetform();
@@ -80,7 +72,6 @@ function themNhanVien() {
 }
 
 function hienthiDS(mangNV) {
-
     var content = "";
     mangNV.map(function (nv) {
 
@@ -105,7 +96,6 @@ function hienthiDS(mangNV) {
     getELE("tableDanhSach").innerHTML = content;
 }
 function xoaNhanVien(ma) {
-
     dsnv.xoaNV(ma);
     hienthiDS(dsnv.mangNV);
     setlocalstorage(dsnv.mangNV);
@@ -117,10 +107,8 @@ function xemChitiet(ma) {
 
         var nvTim = dsnv.mangNV[viTri];
 
-
         getELE("tknv").value = nvTim.maNV;
         getELE("tknv").disabled = true;
-
         getELE("name").value = nvTim.tenNV;
         getELE("email").value = nvTim.emailNV;
         getELE("password").value = nvTim.passwordNV;
@@ -141,21 +129,18 @@ function capnhatNhanVien() {
     var chucvuNV = getELE("chucvu").value;
     var gioNV = getELE("gioLam").value;
 
-
     console.log(maNV, tenNV, emailNV, passwordNV, ngaylamNV, LuongNV, chucvuNV, gioNV);
 
-    var nv = new NhanVien(maNV, tenNV, emailNV, passwordNV, ngaylamNV, Number(LuongNV), chucvuNV, Number(gioNV));
-    nv.tongluong();
+    var nv = new NhanVien(maNV, tenNV, emailNV, passwordNV, ngaylamNV, LuongNV, chucvuNV, gioNV);
+    nv.luong();
     nv.xeploai();
 
-    console.log(nv)
     dsnv.capnhatNV(nv);
     hienthiDS(dsnv.mangNV);
     setlocalstorage(dsnv.mangNV);
     resetform();
 }
 function resetform() {
-
     getELE("formQLNV").reset();
     getELE("tknv").disabled = false;
 }
@@ -163,9 +148,7 @@ function resetform() {
 function timkiemxeploai() {
     var tukhoa = getELE("searchName").value;
     var mangTK = dsnv.timkiem(tukhoa.trim());
-
     hienthiDS(mangTK);
 }
-
 getELE("btnTimNV").onclick = timkiemxeploai;
 getELE("searchName").onkeyup = timkiemxeploai;
