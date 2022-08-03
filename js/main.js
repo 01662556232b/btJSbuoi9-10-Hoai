@@ -1,4 +1,5 @@
 
+
 var dsnv = new DanhSachNhanVien();
 var validation = new Validation();
 
@@ -6,149 +7,160 @@ function getELE(id) {
     return document.getElementById(id);
 }
 
-function setlocalstorage() {
 
-    localStorage.setItem("NhanVien", JSON.stringify(dsnv.mangNV));
+
+function setLocalStorage() {
+    localStorage.setItem("QuanlyNhanVien", JSON.stringify(dsnv.mangNV));
 }
-function getlocalstorage() {
 
-    if (localStorage.getItem("NhanVien") != undefined) {
-        dsnv.mangNV = JSON.parse(localStorage.getItem("NhanVien"));
+function getlocalStorage() {
+    if (localStorage.getItem("QuanlyNhanVien") != undefined) {
+        dsnv.mangNV = JSON.parse(localStorage.getItem("QuanlyNhanVien"));
+
     }
-    hienthiDS(dsnv.mangNV);
+    hienThiDS(dsnv.mangNV);
 }
-getlocalstorage();
+getlocalStorage();
+
+
 
 function themNhanVien() {
-    var maNV = getELE("tknv").value;
+    var manv = getELE("tknv").value;
     var tenNV = getELE("name").value;
-    var emailNV = getELE("email").value;
-    var passwordNV = getELE("password").value;
-    var ngaylamNV = getELE("datepicker").value;
-    var LuongNV = getELE("luongCB").value;
-    var chucvuNV = getELE("chucvu").value;
-    var gioNV = getELE("gioLam").value;
-
-    console.log(maNV, tenNV, emailNV, passwordNV, ngaylamNV, LuongNV, chucvuNV, gioNV);
+    var email = getELE("email").value;
+    var password = getELE("password").value;
+    var ngaylam = getELE("datepicker").value;
+    var luongCB = getELE("luongCB").value;
+    var chucvu = getELE("chucvu").value;
+    var gioLam = getELE("gioLam").value;
 
     var isValid = true;
+    isValid &= validation.checkEmpty(manv,"tbTKNV","không được đẻ trống")
+    && validation.checkID(manv,"tbTKNV","ma không được trùng",dsnv.mangNV);
 
+    isValid &= validation.checkEmpty(tenNV, "tbTen", "không được để trống")
+    && validation.checkName(tenNV, "tbTen", "Tên chỉ được chứa ký tự chữ");
+    
+    isValid &= validation.checkEmpty(email, "tbEmail", " không được để trống")
+    && validation.checkEmail(email, "tbEmail", "Email chưa đúng định dạng");
 
-    isValid &= validation.checkEmpty(maNV, "tbTKNV", "Chố này không được để trống")
-        && validation.checkID(maNV, "tbTKNV", "mã không được trùng", dsnv.mangNV);
+    isValid &= validation.checkEmpty(luongCB, "tbLuongCB", "lương cơ bảng không được để trống")
+    && validation.checkLuong(luongCB, "tbLuongCB", "lương cơ bảng chưa đúng định dạng");
 
-    isValid &= validation.checkEmpty(tenNV, "tbTen", "Chố này không được để trống")
-        && validation.checkname(tenNV, "tbTen", "Tên nhân viên phải là chữ");
+    isValid &= validation.checkEmpty(password, "tbMatKhau", "Pass nv không được để trống")
+    && validation.checkPass(password, "tbMatKhau", "Pass cần ít nhất 1 chữ hoa, 1 chữ thường, 1 số, 1 ký tự đặc biệt, độ dài từ 6-8 ký tự");
 
-    isValid &= validation.checkEmpty(emailNV, "tbEmail", "Chố này không được để trống")
-        && validation.checkemail(emailNV, "tbEmail", "Email phải đúng định dạng");
+    isValid &= validation.checkEmpty(gioLam, "tbGiolam", "giờ làm không được để trống")
+    && validation.checkgio(gioLam, "tbGiolam", "giờ làm chưa đúng định dạng");
 
-    isValid &= validation.checkEmpty(passwordNV, "tbMatKhau", "Chố này không được để trống")
-        && validation.checkpassword(passwordNV, "tbMatKhau", "từ 6-10 ký tự (chứa ít nhất 1 ký tự số, 1 ký tự in hoa, 1 ký tự đặc biệt)");
+    isValid &= validation.checkDropDown("chucvu", "tbChucVu", "chức vụ chưa được chọn");
 
-    isValid &= validation.checkEmpty(LuongNV, "tbLuongCB", "Chố này không được để trống")
-        && validation.checkscore(LuongNV, "tbLuongCB", "nhập 1000000 - 20000000");
-
-    isValid &= validation.checkEmpty(ngaylamNV, "tbNgay", "Chố này không được để trống")
-        && validation.checkngay(ngaylamNV, "tbNgay", " chưa đúng đinh dạng dd/mm/yyyy");
-
-    isValid &= validation.checkEmpty(gioNV, "tbGiolam", "Chố này không được để trống")
-        && validation.checkgio(gioNV, "tbGiolam", "giờ làm chưa đúng định dạng");
-
-    isValid &= validation.checkdropdown("chucvu", "tbChucVu", "Chức vụ phải chọn hợp lệ");
-
-
+   isValid &=validation.checkEmpty(ngaylam, "tbNgay", "ngày làm không được để trống") &&
+   validation.checkngay(ngaylam, "tbNgay","ngày  chưa đúng đinh dạng dd/mm/yyyy")
 
     if (isValid) {
-        var nv = new NhanVien(maNV, tenNV, emailNV, passwordNV, ngaylamNV, LuongNV, chucvuNV, gioNV);
-        nv.luong();
-        nv.xeploai();
+        var nv = new NhanVien(manv, tenNV, email, password, ngaylam, luongCB, chucvu, gioLam);
+
+        nv.TinhLuong();
+        nv.XepLoaiNV()
         dsnv.themNV(nv);
-        hienthiDS(dsnv.mangNV);
-        setlocalstorage();
-        resetform();
+        hienThiDS(dsnv.mangNV);
+        setLocalStorage();
+        resetForm();
     }
+
+
 
 }
 
-function hienthiDS(mangNV) {
+
+
+function hienThiDS(mangNV) {
     var content = "";
-    mangNV.map(function (nv) {
-
-        content += ` 
-             <tr>
-                 <td>${nv.maNV}</td>
-                 <td>${nv.tenNV}</td>
-                 <td>${nv.emailNV}</td>
-                 <td>${nv.ngaylamNV}</td>
-                 <td>${nv.chucvuNV}</td>
-                 <td>${nv.tongluong}</td>
-                 <td>${nv.xeploai}</td>
-                 <td>
-                     <button data-toggle="modal" data-target="#myModal" class="btn btn-info " onclick="xemChitiet('${nv.maNV}')">Xem</button>
-                     <button class="btn btn-danger" onclick="xoaNhanVien('${nv.maNV}')">Xõa</button>
-                 </td>
-             </tr>
-         `;
-
-    });
-
+    mangNV.map(function (nv, index) {
+        content += `
+        <tr>
+            <td>${nv.manv}</td>
+            <td>${nv.tenNV}</td>
+            <td>${nv.email}</td>
+            <td>${nv.ngaylam}</td>
+            <td>${nv.chucvu}</td>
+            <td>${nv.tongLuong}</td>
+            <td>${nv.xepLoai}</td>
+            <td>
+            <button data-toggle="modal" data-target="#myModal" class="btn btn-info" onclick="xemChiTiec('${nv.manv}')">Xem</button>
+            <button  class="btn btn-danger" onclick="xoaNhanVien('${nv.manv}')">Xoá</button>
+            </td>
+        </tr>
+        `;
+    })
+    // console.log(content)
     getELE("tableDanhSach").innerHTML = content;
 }
-function xoaNhanVien(ma) {
-    dsnv.xoaNV(ma);
-    hienthiDS(dsnv.mangNV);
-    setlocalstorage(dsnv.mangNV);
+
+
+function xoaNhanVien(tknv) {
+    // console.log(tknv)
+    dsnv.Xoa(tknv)
+    hienThiDS(dsnv.mangNV);
+    setLocalStorage(dsnv.mangNV);
 }
-function xemChitiet(ma) {
 
-    var viTri = dsnv.timViTri(ma);
+
+function xemChiTiec(tknv) {
+    var viTri = dsnv.viTriNhanVien(tknv);
     if (viTri > -1) {
+        var nvCanTim = dsnv.mangNV[viTri];
 
-        var nvTim = dsnv.mangNV[viTri];
-
-        getELE("tknv").value = nvTim.maNV;
+        getELE("tknv").value = nvCanTim.manv;
         getELE("tknv").disabled = true;
-        getELE("name").value = nvTim.tenNV;
-        getELE("email").value = nvTim.emailNV;
-        getELE("password").value = nvTim.passwordNV;
-        getELE("datepicker").value = nvTim.ngaylamNV;
-        getELE("luongCB").value = nvTim.LuongNV;
-        getELE("chucvu").value = nvTim.chucvuNV;
-        getELE("gioLam").value = nvTim.gioNV;
 
+        getELE("name").value = nvCanTim.tenNV;
+        getELE("email").value = nvCanTim.email;
+        getELE("password").value = nvCanTim.password;
+        getELE("datepicker").value = nvCanTim.ngaylam;
+        getELE("luongCB").value = nvCanTim.luongCB;
+        getELE("chucvu").value = nvCanTim.chucvu;
+        getELE("gioLam").value = nvCanTim.gioLam;
     }
 }
-function capnhatNhanVien() {
-    var maNV = getELE("tknv").value;
+
+
+function capNhatNhanVien() {
+    var manv = getELE("tknv").value;
     var tenNV = getELE("name").value;
-    var emailNV = getELE("email").value;
-    var passwordNV = getELE("password").value;
-    var ngaylamNV = getELE("datepicker").value;
-    var LuongNV = getELE("luongCB").value;
-    var chucvuNV = getELE("chucvu").value;
-    var gioNV = getELE("gioLam").value;
+    var email = getELE("email").value;
+    var password = getELE("password").value;
+    var ngaylam = getELE("datepicker").value;
+    var luongCB = getELE("luongCB").value;
+    var chucvu = getELE("chucvu").value;
+    var gioLam = getELE("gioLam").value;
 
-    console.log(maNV, tenNV, emailNV, passwordNV, ngaylamNV, LuongNV, chucvuNV, gioNV);
+    var nv = new NhanVien(manv, tenNV, email, password, ngaylam, luongCB, chucvu, gioLam);
+    nv.TinhLuong();
 
-    var nv = new NhanVien(maNV, tenNV, emailNV, passwordNV, ngaylamNV, LuongNV, chucvuNV, gioNV);
-    nv.luong();
-    nv.xeploai();
-
-    dsnv.capnhatNV(nv);
-    hienthiDS(dsnv.mangNV);
-    setlocalstorage(dsnv.mangNV);
-    resetform();
+    nv.XepLoaiNV();
+    console.log(nv)
+    dsnv.capNhat(nv);
+    console.log(dsnv.mangNV);
+    hienThiDS(dsnv.mangNV);
+    
+    setLocalStorage(dsnv.mangNV);
+    resetForm();
 }
-function resetform() {
-    getELE("formQLNV").reset();
+
+
+function resetForm() {
+    getELE("formNV").reset();   
     getELE("tknv").disabled = false;
 }
 
-function timkiemxeploai() {
-    var tukhoa = getELE("searchName").value;
-    var mangTK = dsnv.timkiem(tukhoa.trim());
-    hienthiDS(mangTK);
+function timTheoLoai (){
+    tuKhoa = getELE("searchName").value;
+    var mangTk = dsnv.timkiem(tuKhoa.trim());
+
+    hienThiDS(mangTk);
+    
 }
-getELE("btnTimNV").onclick = timkiemxeploai;
-getELE("searchName").onkeyup = timkiemxeploai;
+getELE("btnTimNV").onclick = timTheoLoai
+getELE("searchName").onkeyup =timTheoLoai

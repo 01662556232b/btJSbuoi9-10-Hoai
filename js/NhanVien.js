@@ -1,39 +1,47 @@
-function NhanVien(maNV, tenNV, emailNV, passwordNV, ngaylamNV, LuongNV, chucvuNV, gioNV) {
-   this.maNV = maNV;
+
+
+//! nhân viên
+
+function NhanVien(manv, tenNV, email, password, ngaylam, luongCB, chucvu, gioLam) {
+   this.manv = manv;
    this.tenNV = tenNV;
-   this.emailNV = emailNV;
-   this.passwordNV = passwordNV;
-   this.ngaylamNV = ngaylamNV;
-   this.LuongNV = LuongNV;
-   this.chucvuNV = chucvuNV;
-   this.gioNV = gioNV;
+   this.email = email;
+   this.password = password;
+   this.ngaylam = ngaylam;
+   this.luongCB = luongCB;
+   this.chucvu = chucvu;
+   this.gioLam = gioLam;
+   this.tongLuong = 0;
+   this.xepLoai = "";
 
-   this.luong = 0;
-   this.xeploai = "";
 
-   this.luong = function () {
-      if (this.chucvuNV == "Sếp") {
-         this.tongluong = this.LuongNV * 3;
-      } else if (this.chucvuNV == "Trưởng phòng") {
-         this.tongluong = this.LuongNV * 2;
-      } else if (this.chucvuNV == "Nhân viên") {
-         this.tongluong = this.LuongNV;
-      }
+   this.TinhLuong = function(){
+       if(this.chucvu == "Sếp"){
+           this.tongLuong = this.luongCB * 3;
+       }else if(this.chucvu == "Trưởng phòng"){
+           this.tongLuong = this.luongCB * 2;
+       }else if(this.chucvu == "Nhân viên"){
+           this.tongLuong = this.luongCB;
+       }
    }
-   this.xeploai = function () {
-      var loai = Number(this.gioNV);
-      if (loai >= 192) {
-         this.xeploai = "Xuất sắc";
-      } else if (loai < 192 && loai >= 176) {
-         this.xeploai = "Giỏi";
-      } else if (loai < 176 && loai >= 160) {
-         this.xeploai = "Khá";
-      } else if (loai < 160) {
-         this.xeploai = "Trung Bình";
-      } else {
-         this.xeploai = "";
-      }
+
+   this.XepLoaiNV = function(){
+       if(this.gioLam >= 192){
+           this.xepLoai =  "xuất sắc"
+
+       }else if(this.gioLam >= 176){
+          this.xepLoai = "giỏi"
+
+       }else if(this.gioLam >= 160){
+           this.xepLoai =  "khá"
+       }else{
+           this.xepLoai = "trung bình"
+       }
+
    }
+   
+
+
 
 }
 
